@@ -10,8 +10,11 @@ services:
       - GENERIC_TIMEZONE=${TIMEZONE}
     networks:
       - n8n-network
+      - host
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
-      - n8n_data:/home/node/.n8n
+      - ./n8n_data:/home/node/.n8n
 
   ngrok:
     container_name: ngrok
@@ -28,9 +31,8 @@ services:
     volumes:
       - ./ngrok.yml:/etc/ngrok.yml
 
-volumes:
-  n8n_data:
-
 networks:
   n8n-network:
     driver: bridge
+  host:
+    external: true
