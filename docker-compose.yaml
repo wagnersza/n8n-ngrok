@@ -8,9 +8,11 @@ services:
       - WEBHOOK_URL=${URL}
       - TZ=${TIMEZONE}
       - GENERIC_TIMEZONE=${TIMEZONE}
-    networks:
-      - n8n-network
-      - host
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+    network_mode: host
+    ports:
+      - "5678:5678"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -34,5 +36,3 @@ services:
 networks:
   n8n-network:
     driver: bridge
-  host:
-    external: true
